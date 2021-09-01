@@ -37,13 +37,26 @@ module.exports = {
         }
       }
     },
+
     createPost: (req, res) => {
-      //code here
+      const db = req.app.get('db');
+      const { id } = req.session.user;
+      const { title, img, content } = req.body;
+      const date = new Date;
+
+      if(!id) {
+        res.status(403).json('You need to log in to do that')
+      } else {
+        const create = db.create_post({ id, title, img, content, date})
+        res.status(200).json(create);
+      }
     },
+
     readPost: (req, res) => {
       req.app.get('db').post.read_post(req.params.id)
         .then(post => post[0] ? res.status(200).send(post[0]) : res.status(200).send({}))
     },
+    
     deletePost: (req, res) => {
       req.app.get('db').post.delete_post(req.params.id)
         .then(_ => res.sendStatus(200))
