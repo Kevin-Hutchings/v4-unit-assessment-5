@@ -1,20 +1,15 @@
-import axios from 'axios';
-
 const initialState = {
    username: '',
-   password: ''
+   profilePic: ''
 }
 
 const UPDATE_USER = 'UPDATE_USER';
 const LOGOUT = 'LOGOUT';
 
-export const updateUser = () => {
-   let data = axios.get('/api/auth/me')
-   .then(res => res.data)
-   .catch(err => console.log(err))
+export const updateUser = (user) => {
    return {
       type: UPDATE_USER,
-      payload: data
+      payload: user
    }
 }
 
@@ -29,11 +24,13 @@ export default function reducer(state = initialState, action) {
       case UPDATE_USER: 
       return {
          ...state,
-         ...action.payload,
+         username: action.payload.username,
+         profilePic: action.payload.profilePic,
       }
       case LOGOUT:
          return {
-            ...state,
+            username: '',
+            profilePic: '',
          }
       default: return state;
    }

@@ -47,8 +47,9 @@ module.exports = {
       if(!id) {
         res.status(403).json('You need to log in to do that')
       } else {
-        const create = db.create_post({ id, title, img, content, date})
-        res.status(200).json(create);
+        db.post.create_post([ id, title, img, content, date ])
+        .then(() => res.sendStatus(200))
+        .catch(err => console.log(err))
       }
     },
 

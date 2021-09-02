@@ -71,3 +71,28 @@
     justify-content: space-around;
     width: 55%;
   }
+
+@media (max-width: 450px) {
+  .auth-container {
+    border-radius: 8px;
+    box-shadow: none;
+    background-image: none;
+    width: 100vw;
+    height: 55vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+    position: relative;
+  }
+
+  .auth-button-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 40px;
+    position: relative;
+    right: 30%;
+  }
+}
