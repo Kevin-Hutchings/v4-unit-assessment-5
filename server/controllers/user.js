@@ -40,7 +40,7 @@ const login = async (req, res) => {
             profilePic: user.profile_pic,
             id: user.id,
          }
-         return res.send(req.session.user);
+         res.send(req.session.user);
       }
    }
 };

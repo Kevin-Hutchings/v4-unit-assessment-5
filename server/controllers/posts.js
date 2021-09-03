@@ -45,7 +45,7 @@ module.exports = {
       const date = new Date;
 
       if(!id) {
-        res.status(403).json('You need to log in to do that')
+        res.sendStatus(403)
       } else {
         db.post.create_post([ id, title, img, content, date ])
         .then(() => res.sendStatus(200))
