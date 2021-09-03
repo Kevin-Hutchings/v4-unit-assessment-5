@@ -8,7 +8,12 @@ const {
    getUser,
    logout,
 } = require('./controllers/user');
-const postCtrl = require('./controllers/posts')
+const {
+   readPost,
+   readPosts,
+   createPost,
+   deletePost
+} = require('./controllers/posts');
 
 const { CONNECTION_STRING, SERVER_PORT, SESSION_SECRET } = process.env;
 
@@ -21,7 +26,7 @@ app.use(
       saveUninitialized: false,
       secret: SESSION_SECRET,
       cookie: {
-         maxAge: 2592000000
+         maxAge: 1000 * 60 * 60 * 24 * 30  //cookie lasts for 1 month
       },
    })
 );
@@ -32,7 +37,7 @@ massive({
 })
 .then(dbInstance => {
    app.set('db', dbInstance);
-   console.log('Database connection successful!');
+   console.log(`Don't forget your towel`);
 })
 .catch(err => console.log(err));
 
@@ -43,9 +48,9 @@ app.get('/api/auth/me', getUser);
 app.post('/api/auth/logout', logout);
 
 // Post Endpoints
-app.get('/api/posts', postCtrl.readPosts);
-app.post('/api/post', postCtrl.createPost);
-app.get('/api/post/:id', postCtrl.readPost);
-app.delete('/api/post/:id', postCtrl.deletePost)
+app.get('/api/posts', readPosts);
+app.post('/api/post', createPost);
+app.get('/api/post/:id', readPost);
+app.delete('/api/post/:id', deletePost)
 
 app.listen(SERVER_PORT, () => console.log(`Listening on ${SERVER_PORT}`));
